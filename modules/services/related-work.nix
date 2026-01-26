@@ -63,6 +63,7 @@ in
       };
 
       environment = {
+        IP = "0.0.0.0";
         PORT = toString cfg.port;
         DATA_DIR = cfg.dataDir;
       };
