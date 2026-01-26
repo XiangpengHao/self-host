@@ -53,6 +53,7 @@ in
         StateDirectory = "related-work";
         Restart = "on-failure";
         RestartSec = 5;
+        LoadCredential = "openrouter-api-key:${cfg.openRouterApiKeyFile}";
 
         # Security hardening
         NoNewPrivileges = true;
@@ -69,7 +70,7 @@ in
       };
 
       script = ''
-        export OPENROUTER_API_KEY="$(cat ${cfg.openRouterApiKeyFile})"
+        export OPENROUTER_API_KEY="$(cat $CREDENTIALS_DIRECTORY/openrouter-api-key)"
         exec ${cfg.package}/bin/related-work
       '';
     };
