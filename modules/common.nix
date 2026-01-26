@@ -9,6 +9,15 @@
     experimental-features = [ "nix-command" "flakes" ];
     # Allow the wheel group to manage nix
     trusted-users = [ "root" "@wheel" ];
+    # Cachix binary cache
+    substituters = [
+      "https://cache.nixos.org"
+      "https://xiangpeng.cachix.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "xiangpeng.cachix.org-1:ZmNrfIhNF9o/1F06sov5aNzGmKDv+4N0QEUgXHr0hh8="
+    ];
   };
 
   # Automatic garbage collection
