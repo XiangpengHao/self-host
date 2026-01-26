@@ -1,5 +1,12 @@
 # Host-specific configuration for nixnas
-{ config, lib, pkgs, inputs, hostname, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  hostname,
+  ...
+}:
 
 {
   imports = [
@@ -28,7 +35,7 @@
   services.related-work = {
     enable = true;
     port = 8080;
-    dataDir = "/var/lib/related-work/data";
+    dataDir = "/home/hao/data";
     openRouterApiKeyFile = config.sops.secrets."openrouter-api-key".path;
     openFirewall = true;
   };
