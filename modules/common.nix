@@ -47,7 +47,14 @@
   };
 
   # Firewall defaults
-  networking.firewall.enable = true;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
+
+  # Tailscale VPN
+  services.tailscale.enable = true;
 
   # Timezone
   time.timeZone = "UTC";
