@@ -42,6 +42,18 @@ in
   };
 
   config = mkIf cfg.enable {
+    users.users.related-work = {
+      isSystemUser = true;
+      group = "related-work";
+      home = "/var/lib/related-work";
+    };
+    users.groups.related-work = { };
+
+    # Ensure data directory exists with correct permissions
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataDir} 0755 related-work related-work -"
+    ];
+
     systemd.services.related-work = {
       description = "Related Work - Academic Paper Browser";
       wantedBy = [ "multi-user.target" ];
@@ -49,18 +61,17 @@ in
 
       serviceConfig = {
         Type = "simple";
-        DynamicUser = true;
+        User = "related-work";
+        Group = "related-work";
         StateDirectory = "related-work";
         Restart = "on-failure";
         RestartSec = 5;
-        LoadCredential = "openrouter-api-key:${cfg.openRouterApiKeyFile}";
 
         # Security hardening
         NoNewPrivileges = true;
         ProtectSystem = "strict";
         ProtectHome = true;
         PrivateTmp = true;
-        ReadOnlyPaths = [ cfg.dataDir ];
       };
 
       environment = {
@@ -70,7 +81,7 @@ in
       };
 
       script = ''
-        export OPENROUTER_API_KEY="$(cat $CREDENTIALS_DIRECTORY/openrouter-api-key)"
+        export OPENROUTER_API_KEY="$(cat ${cfg.openRouterApiKeyFile})"
         exec ${cfg.package}/bin/related-work
       '';
     };

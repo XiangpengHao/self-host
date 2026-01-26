@@ -11,7 +11,10 @@
 
   # Sops secrets for this host
   sops.secrets = {
-    "openrouter-api-key" = { };
+    "openrouter-api-key" = {
+      owner = "related-work";
+      group = "related-work";
+    };
   };
 
   # Enable Uptime Kuma
