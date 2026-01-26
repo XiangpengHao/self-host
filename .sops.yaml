@@ -11,7 +11,7 @@ keys:
   # Per-host keys derived from SSH host keys
   # Get with: ssh-keyscan hostname | ssh-to-age
   # Or on host: cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
-  - &nixnas age1rklrqrtlzxmt0j80v6jn9d30jzas0332j8qtz4mq3nxtzjgtee7sheqg7f 
+  - &nixnas age167sqwsvpawlgwdqka2dcw75uhvg7xhef7yvkst8xg9y7hwlqk4qqs4c3ls
 
 creation_rules:
   # nixnas secrets - encrypted to admin + nixnas
