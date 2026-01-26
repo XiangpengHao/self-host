@@ -1,0 +1,14 @@
+# Nix build artifacts
+result
+result-*
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Never commit unencrypted secrets
+*.decrypted
+*.plaintext
