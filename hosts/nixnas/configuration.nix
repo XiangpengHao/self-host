@@ -35,7 +35,6 @@
   services.related-work = {
     enable = true;
     port = 8080;
-    dataDir = "/home/hao/data";
     openRouterApiKeyFile = config.sops.secrets."openrouter-api-key".path;
     openFirewall = true;
   };

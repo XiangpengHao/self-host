@@ -1,6 +1,12 @@
 # Related Work - Academic paper search/browse application
 # https://github.com/XiangpengHao/related-work
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 with lib;
 
