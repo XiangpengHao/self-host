@@ -15,6 +15,7 @@
     ../../modules/services/uptime-kuma.nix
     ../../modules/services/related-work.nix
     ../../modules/services/cloudflare-ddns.nix
+    ../../modules/services/clawdbot.nix
   ];
 
   # Sops secrets for this host
@@ -24,6 +25,10 @@
       group = "related-work";
     };
     "cloudflare-api-token" = { };
+    "telegram-bot-token" = {
+      owner = "clawdbot";
+      group = "clawdbot";
+    };
   };
 
   # Enable Uptime Kuma
@@ -58,6 +63,14 @@
     apiTokenFile = config.sops.secrets."cloudflare-api-token".path;
   };
 
+  # Clawdbot - AI assistant gateway with Telegram
+  # Run `clawdbot-onboard` after deployment to set up OpenAI/Anthropic OAuth
+  services.clawdbot = {
+    enable = true;
+    telegramBotTokenFile = config.sops.secrets."telegram-bot-token".path;
+    telegramAllowedUsers = [ 132580810 ]; # get from @userinfobot
+  };
+
   # Boot configuration (adjust for your hardware)
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -66,7 +79,11 @@
   networking = {
     useDHCP = true;
     firewall = {
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [
+        22
+        80
+        443
+      ];
       interfaces.tailscale0.allowedTCPPorts = [ 3001 ];
     };
   };

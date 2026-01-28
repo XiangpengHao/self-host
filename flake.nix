@@ -9,10 +9,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-clawdbot.url = "github:clawdbot/nix-clawdbot";
+
     related-work.url = "github:XiangpengHao/related-work";
   };
 
-  outputs = { self, nixpkgs, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, sops-nix, home-manager, nix-clawdbot, ... }@inputs:
     let
       # Helper to generate NixOS configurations
       mkHost = { hostname, system ? "x86_64-linux" }:
@@ -21,6 +28,10 @@
           specialArgs = { inherit inputs hostname; };
           modules = [
             sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            {
+              nixpkgs.overlays = [ nix-clawdbot.overlays.default ];
+            }
             ./hosts/${hostname}/configuration.nix
             ./modules/common.nix
           ];
