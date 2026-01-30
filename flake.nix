@@ -10,6 +10,11 @@
     };
 
     related-work.url = "github:XiangpengHao/related-work";
+
+    nix-moltbot = {
+      url = "github:moltbot/nix-moltbot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, sops-nix, ... }@inputs:

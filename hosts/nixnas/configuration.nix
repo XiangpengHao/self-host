@@ -15,6 +15,7 @@
     ../../modules/services/uptime-kuma.nix
     ../../modules/services/related-work.nix
     ../../modules/services/cloudflare-ddns.nix
+    ../../modules/services/moltbot.nix
   ];
 
   # Sops secrets for this host
@@ -24,6 +25,10 @@
       group = "related-work";
     };
     "cloudflare-api-token" = { };
+    "telegram-bot-token" = {
+      owner = "moltbot";
+      group = "moltbot";
+    };
   };
 
   # Enable Uptime Kuma
@@ -49,6 +54,16 @@
         reverse_proxy 127.0.0.1:8080
       '';
     };
+  };
+
+  # Moltbot - AI assistant with Telegram integration
+  # Note: OpenAI uses OAuth login - run `moltbot onboard` to authenticate
+  services.moltbot = {
+    enable = true;
+    telegramBotTokenFile = config.sops.secrets."telegram-bot-token".path;
+    telegramAllowedUsers = [ 132580810 ];
+    llmModel = "openai/codex";
+    openFirewall = false;
   };
 
   # Cloudflare DDNS - keeps DNS records updated with dynamic IP
